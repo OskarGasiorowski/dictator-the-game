@@ -310,3 +310,4 @@ fabric.properties
 .idea/secret-hitler-the-game.iml
 .idea/modules.xml
 .idea/inspectionProfiles/Project_Default.xml
+.idea/prettier.xml
