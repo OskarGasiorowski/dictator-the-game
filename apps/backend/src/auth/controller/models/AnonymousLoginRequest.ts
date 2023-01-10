@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MinLength, MaxLength, IsUUID } from 'class-validator';
+import { MinLength, MaxLength } from 'class-validator';
 
 export class AnonymousLoginRequest {
     @MinLength(3)
@@ -7,6 +7,11 @@ export class AnonymousLoginRequest {
     @ApiProperty()
     userName: string;
 
+    @MinLength(1)
     @ApiProperty()
     gameNameId: string;
+
+    @MinLength(1)
+    @ApiProperty()
+    gameRoomPassword: string;
 }

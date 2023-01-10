@@ -12,6 +12,7 @@ export class AuthService {
             username: user.name,
             sub: randomUUID(),
             gameId: user.gameId,
+            role: user.role,
         });
 
         return jwt;
