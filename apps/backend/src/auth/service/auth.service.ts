@@ -11,6 +11,7 @@ export class AuthService {
         const jwt = this.jwtService.sign({
             username: user.name,
             sub: randomUUID(),
+            gameId: user.gameId,
         });
 
         return jwt;
