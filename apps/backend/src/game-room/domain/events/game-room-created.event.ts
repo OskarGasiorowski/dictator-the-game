@@ -1,4 +1,4 @@
-import { Event } from '../../../lib';
+import { Event } from 'event-sourcing';
 
 export interface GameRoomCreatedEvent extends Event {
     id: string;

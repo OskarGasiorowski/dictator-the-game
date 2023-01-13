@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 import { CreateGameRoomDto } from './create-game-room.dto';
-import { Aggregate } from '../../lib';
 import { GameRoomCreatedEvent, PlayerJoinGameRoomEvent } from './events';
 import { randomUUID } from 'crypto';
+import { Aggregate } from 'event-sourcing';
 
 interface GameRoomData {
     name: string;
