@@ -1,2 +1,2 @@
 export { Aggregate } from './Aggregate';
-export type { Event } from './Event';
+export { Event } from './Event';

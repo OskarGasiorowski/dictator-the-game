@@ -18,6 +18,7 @@ export class GameRoomAggregate extends Aggregate<
 
     static create(data: CreateGameRoomDto) {
         const createdEvent: GameRoomCreatedEvent = {
+            eventName: 'GameRoomCreatedEvent',
             name: data.name,
             password: data.password,
             id: randomUUID(),
@@ -30,13 +31,14 @@ export class GameRoomAggregate extends Aggregate<
         return aggregate;
     }
 
-    private applyGameRoomCreatedEvent(event: GameRoomCreatedEvent): void {
+    protected applyGameRoomCreatedEvent(event: GameRoomCreatedEvent): void {
         this.data = { ...event, players: [] };
         this._id = event.id;
     }
 
     playerJoin(playerName: string) {
         const event: PlayerJoinGameRoomEvent = {
+            eventName: 'PlayerJoinGameRoomEvent',
             id: randomUUID(),
             name: playerName,
         };
@@ -45,8 +47,8 @@ export class GameRoomAggregate extends Aggregate<
         this.applyPlayerJoinGameRoomEvent(event);
     }
 
-    private applyPlayerJoinGameRoomEvent(
-        playerJoinGameRoomEvent: PlayerJoinGameRoomEvent,
+    protected applyPlayerJoinGameRoomEvent(
+        playerJoinGameRoomEvent: PlayerJoinGameRoomEvent
     ): void {
         this.data.players.push({ ...playerJoinGameRoomEvent });
     }

@@ -15,6 +15,8 @@ export class CreateGameHandler implements ICommandHandler<CreateGameCommand> {
 
         gameRoom.playerJoin(command.playerName);
 
+        gameRoom.loadFromHistory(gameRoom.popAllEvents());
+
         return this.authService.anonymous({
             gameId: 'brand-new-game',
             role: 'admin',
