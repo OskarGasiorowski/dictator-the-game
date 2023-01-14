@@ -2,12 +2,16 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateGameCommand } from './create-game.command';
 import { AuthService } from '../../../auth';
 import { GameRoomAggregate } from '../../domain';
+import { EventStore } from '@secret-hitler-the-game/event-sourcing';
 
 @CommandHandler(CreateGameCommand)
 export class CreateGameHandler implements ICommandHandler<CreateGameCommand> {
-    constructor(private readonly authService: AuthService) {}
+    constructor(
+        private readonly authService: AuthService,
+        private readonly eventStore: EventStore,
+    ) {}
 
-    execute(command: CreateGameCommand): Promise<any> {
+    async execute(command: CreateGameCommand): Promise<any> {
         const gameRoom = GameRoomAggregate.create({
             name: command.gameRoomName,
             password: command.gamePassword,
@@ -15,7 +19,7 @@ export class CreateGameHandler implements ICommandHandler<CreateGameCommand> {
 
         gameRoom.playerJoin(command.playerName);
 
-        gameRoom.loadFromHistory(gameRoom.popAllEvents());
+        await this.eventStore.add(gameRoom.id, gameRoom.popAllEvents());
 
         return this.authService.anonymous({
             gameId: 'brand-new-game',

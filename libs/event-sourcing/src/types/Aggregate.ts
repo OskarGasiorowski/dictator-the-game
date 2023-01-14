@@ -16,6 +16,7 @@ export abstract class Aggregate<TEvent extends Event> {
     }
 
     private applyChangeInternal(event: Event): void {
+        console.log(event);
         if (!(this as any)[`apply${event.eventName}`]) {
             throw new Error(
                 `No handler found for ${event.constructor.name}. Be sure to define a method called apply${event.constructor.name} on the aggregate.`
