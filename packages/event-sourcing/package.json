@@ -2,13 +2,9 @@
   "name": "event-sourcing",
   "main": "src/index.ts",
   "types": "src/index.ts",
+  "type": "module",
   "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "typescript": "^4.3.5"

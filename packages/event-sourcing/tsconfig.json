@@ -7,7 +7,6 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "target": "es2017",
     "strict": true,
     "strictNullChecks": false,
   },

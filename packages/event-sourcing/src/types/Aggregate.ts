@@ -1,13 +1,32 @@
 import { Event } from "./Event";
 
-export class Aggregate<TEvent extends Event> {
-    protected _id: string
+export abstract class Aggregate<TEvent extends Event> {
+  private uncommittedEvents: TEvent[] = [];
+
+  protected _id: string = "";
 
   get id(): string {
     return this._id;
   }
 
-  private uncommittedEvents: TEvent[] = [];
+  loadFromHistory(history: Event[]): void {
+    history.forEach((event) => {
+      this.applyChangeInternal(event);
+    });
+  }
+
+  private applyChangeInternal(event: Event): void {
+    const name = event.constructor.name;
+    console.log(name);
+    const applyMethod = (this as any)[`apply${name}`];
+    if (applyMethod) {
+      throw new Error(
+        `No handler found for ${event.constructor.name}. Be sure to define a method called apply${event.constructor.name} on the aggregate.`
+      );
+    }
+
+    applyMethod(event);
+  }
 
   protected enqueueEvent(event: TEvent) {
     this.uncommittedEvents.push(event);
