@@ -25,12 +25,12 @@ export class GameRoomAggregate extends Aggregate<
 
         const aggregate = new GameRoomAggregate();
         aggregate.enqueueEvent(createdEvent);
-        aggregate.apply(createdEvent);
+        aggregate.applyGameRoomCreatedEvent(createdEvent);
 
         return aggregate;
     }
 
-    private apply(event: GameRoomCreatedEvent): void {
+    private applyGameRoomCreatedEvent(event: GameRoomCreatedEvent): void {
         this.data = { ...event, players: [] };
         this._id = event.id;
     }
@@ -42,10 +42,12 @@ export class GameRoomAggregate extends Aggregate<
         };
 
         this.enqueueEvent(event);
-        this.apply(event);
+        this.applyPlayerJoinGameRoomEvent(event);
     }
 
-    private apply(playerJoinGameRoomEvent: PlayerJoinGameRoomEvent): void {
+    private applyPlayerJoinGameRoomEvent(
+        playerJoinGameRoomEvent: PlayerJoinGameRoomEvent,
+    ): void {
         this.data.players.push({ ...playerJoinGameRoomEvent });
     }
 }
