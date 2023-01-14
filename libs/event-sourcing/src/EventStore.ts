@@ -14,6 +14,7 @@ export class EventStore {
     constructor(settings: Settings) {
         this.client = new Redis({
             ...settings,
+            db: 0,
         });
     }
 
@@ -22,7 +23,7 @@ export class EventStore {
 
         return entries.map((entry) => ({
             eventName: entry[1][1],
-            // ...JSON.parse(entry[1][3]),
+            ...JSON.parse(entry[1][3]),
         }));
     }
 

@@ -6,13 +6,13 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
     imports: [
+        ConfigModule.forRoot({
+            envFilePath: '.env',
+            isGlobal: true,
+        }),
         GameModule,
         AuthModule,
         GameRoomModule,
-        ConfigModule.forRoot({
-            envFilePath: '.development.env',
-            isGlobal: true,
-        }),
     ],
     controllers: [],
     providers: [],
