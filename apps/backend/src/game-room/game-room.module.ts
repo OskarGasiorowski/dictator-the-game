@@ -5,6 +5,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { AuthModule } from '../auth';
 import { EventStore } from '@secret-hitler-the-game/event-sourcing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GameRoomRepository } from './domain';
 
 const CommandHandlers = [CreateGameHandler];
 
@@ -13,6 +14,7 @@ const CommandHandlers = [CreateGameHandler];
     imports: [CqrsModule, AuthModule],
     providers: [
         ...CommandHandlers,
+        GameRoomRepository,
         {
             provide: EventStore,
             useFactory: (configService: ConfigService) => {
