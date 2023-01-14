@@ -1,1 +1,1 @@
-export { AnonymousLoginDto } from './AnonymousLoginDto'
+export { AnonymousLoginDto } from './AnonymousLoginDto';
