@@ -37,7 +37,7 @@ export function Button({ children, className, ...props }: Props) {
                 ),
                 transitionDuration('duration-150'),
                 transitionsAndAnimations('transition', 'ease-in-out'),
-                padding('py-3'),
+                padding('py-4'),
                 borderRadius('rounded-md'),
                 typography('text-gray-800'),
                 className,

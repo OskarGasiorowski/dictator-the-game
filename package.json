@@ -5,6 +5,7 @@
     "scripts": {},
     "private": true,
     "dependencies": {
+        "@hookform/resolvers": "^2.9.10",
         "@nestjs/common": "^9.0.0",
         "@nestjs/config": "^2.2.0",
         "@nestjs/core": "^9.0.0",
@@ -22,7 +23,8 @@
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.0.0",
         "tailwindcss-classnames": "^3.0.7",
-        "tslib": "^2.3.0"
+        "tslib": "^2.3.0",
+        "zod": "^3.20.2"
     },
     "devDependencies": {
         "@nestjs/cli": "^8.0.0",
