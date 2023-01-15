@@ -3,31 +3,30 @@ import { GameRoomController } from './controllers';
 import { CreateGameHandler } from './commands';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AuthModule } from '../auth';
-import { EventStore } from '@secret-hitler-the-game/event-sourcing';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import {
+    EventStore,
+    PublisherAggregateMerger,
+} from '@secret-hitler-the-game/event-sourcing';
 import { GameRoomRepository } from './domain';
+import Redis from 'ioredis';
+import { GameRoomNameReservationService } from './services';
+import { ReserveGameRoomNameOnGameCreatedEventHandler } from './events-handler';
 
 const CommandHandlers = [CreateGameHandler];
+const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
 
 @Module({
     controllers: [GameRoomController],
-    imports: [CqrsModule, AuthModule],
+    imports: [CqrsModule, AuthModule, Redis, PublisherAggregateMerger],
     providers: [
         ...CommandHandlers,
+        ...EventHandlers,
         GameRoomRepository,
+        GameRoomNameReservationService,
         {
             provide: EventStore,
-            useFactory: (configService: ConfigService) => {
-                return new EventStore({
-                    host: configService.getOrThrow<string>('REDIS_HOST'),
-                    port: configService.getOrThrow<number>('REDIS_PORT'),
-                    username:
-                        configService.getOrThrow<string>('REDIS_USERNAME'),
-                    password:
-                        configService.getOrThrow<string>('REDIS_PASSWORD'),
-                });
-            },
-            inject: [ConfigService],
+            useFactory: (redis: Redis) => new EventStore(redis),
+            inject: [Redis],
         },
     ],
 })

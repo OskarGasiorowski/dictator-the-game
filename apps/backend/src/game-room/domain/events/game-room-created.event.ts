@@ -1,8 +1,10 @@
-import { Event } from '@secret-hitler-the-game/event-sourcing';
+import { IEvent } from '@secret-hitler-the-game/event-sourcing';
 
-export interface GameRoomCreatedEvent extends Event {
-    eventName: 'GameRoomCreatedEvent';
-    id: string;
-    name: string;
-    password: string;
+export class GameRoomCreatedEvent implements IEvent {
+    constructor(
+        public eventName: 'GameRoomCreatedEvent',
+        public id: string,
+        public name: string,
+        public password: string,
+    ) {}
 }

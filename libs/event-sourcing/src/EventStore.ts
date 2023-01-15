@@ -1,5 +1,5 @@
 import Redis from 'ioredis';
-import { Event } from './types';
+import { IEvent } from './types';
 
 interface Settings {
     port: number;
@@ -9,16 +9,9 @@ interface Settings {
 }
 
 export class EventStore {
-    private readonly client: Redis;
+    constructor(private readonly client: Redis) {}
 
-    constructor(settings: Settings) {
-        this.client = new Redis({
-            ...settings,
-            db: 0,
-        });
-    }
-
-    async get(streamId: string): Promise<Event[]> {
+    async get(streamId: string): Promise<IEvent[]> {
         const entries = await this.client.xrange(streamId, '-', '+');
 
         return entries.map((entry) => ({
@@ -27,7 +20,7 @@ export class EventStore {
         }));
     }
 
-    async add(streamId: string, events: Event[]): Promise<void> {
+    async add(streamId: string, events: IEvent[]): Promise<void> {
         const promises = events.map(({ eventName, ...content }) => {
             return this.client.xadd(
                 streamId,

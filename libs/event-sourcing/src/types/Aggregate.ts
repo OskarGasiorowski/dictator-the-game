@@ -1,7 +1,7 @@
-import { Event } from './Event';
+import { IEvent } from './IEvent';
 
-export abstract class Aggregate<TEvent extends Event> {
-    private uncommittedEvents: TEvent[] = [];
+export abstract class Aggregate<TEvent extends IEvent> {
+    private _uncommittedEvents: TEvent[] = [];
 
     protected _id = '';
 
@@ -9,17 +9,20 @@ export abstract class Aggregate<TEvent extends Event> {
         return this._id;
     }
 
-    loadFromHistory(history: Event[]): void {
+    get uncommittedEvents(): TEvent[] {
+        return this._uncommittedEvents;
+    }
+
+    loadFromHistory(history: IEvent[]): void {
         history.forEach((event) => {
             this.applyChangeInternal(event);
         });
     }
 
-    private applyChangeInternal(event: Event): void {
-        console.log(event);
+    private applyChangeInternal(event: IEvent): void {
         if (!(this as any)[`apply${event.eventName}`]) {
             throw new Error(
-                `No handler found for ${event.constructor.name}. Be sure to define a method called apply${event.constructor.name} on the aggregate.`
+                `No handler found for ${event.constructor.name}. Be sure to define a method called apply${event.constructor.name} on the aggregate.`,
             );
         }
 
@@ -27,12 +30,13 @@ export abstract class Aggregate<TEvent extends Event> {
     }
 
     protected enqueueEvent(event: TEvent) {
-        this.uncommittedEvents.push(event);
+        this._uncommittedEvents.push(event);
     }
 
-    public popAllEvents(): TEvent[] {
-        const events = [...this.uncommittedEvents];
-        this.uncommittedEvents = [];
-        return events;
+    abstract publishEvents(): void;
+
+    commit() {
+        this.publishEvents();
+        this._uncommittedEvents = [];
     }
 }

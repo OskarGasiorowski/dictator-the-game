@@ -17,12 +17,12 @@ export class GameRoomAggregate extends Aggregate<
     private data: GameRoomData;
 
     static create(data: CreateGameRoomDto) {
-        const createdEvent: GameRoomCreatedEvent = {
-            eventName: 'GameRoomCreatedEvent',
-            name: data.name,
-            password: data.password,
-            id: randomUUID(),
-        };
+        const createdEvent = new GameRoomCreatedEvent(
+            'GameRoomCreatedEvent',
+            randomUUID(),
+            data.name,
+            data.password,
+        );
 
         const aggregate = new GameRoomAggregate();
         aggregate.enqueueEvent(createdEvent);
@@ -31,7 +31,7 @@ export class GameRoomAggregate extends Aggregate<
         return aggregate;
     }
 
-    protected applyGameRoomCreatedEvent(event: GameRoomCreatedEvent): void {
+    private applyGameRoomCreatedEvent(event: GameRoomCreatedEvent): void {
         this.data = { ...event, players: [] };
         this._id = event.id;
     }
@@ -48,8 +48,12 @@ export class GameRoomAggregate extends Aggregate<
     }
 
     protected applyPlayerJoinGameRoomEvent(
-        playerJoinGameRoomEvent: PlayerJoinGameRoomEvent
+        playerJoinGameRoomEvent: PlayerJoinGameRoomEvent,
     ): void {
         this.data.players.push({ ...playerJoinGameRoomEvent });
+    }
+
+    publishEvents(): void {
+        throw new Error('');
     }
 }

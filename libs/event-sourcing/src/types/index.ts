@@ -1,2 +1,2 @@
-export { Aggregate } from './Aggregate';
-export { Event } from './Event';
+export { Aggregate, EventMerger } from './Aggregate';
+export { IEvent } from './IEvent';
