@@ -31,13 +31,12 @@ export class CreateGameHandler implements ICommandHandler<CreateGameCommand> {
                 password: command.gamePassword,
             }),
         );
-        gameRoom.playerJoin(command.playerName);
-
+        gameRoom.playerJoin(command.playerName, command.gamePassword);
         await this.gameRoomRepository.save(gameRoom);
         gameRoom.commit();
 
         return this.authService.anonymous({
-            gameId: 'brand-new-game',
+            gameId: gameRoom.id,
             role: 'admin',
             name: command.playerName,
         });

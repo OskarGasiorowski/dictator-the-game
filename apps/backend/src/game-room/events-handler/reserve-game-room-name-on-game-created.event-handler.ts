@@ -11,6 +11,9 @@ export class ReserveGameRoomNameOnGameCreatedEventHandler
     ) {}
 
     async handle(event: DomainEvents.GameRoomCreatedEvent) {
-        await this.gameRoomNameReservation.makeReservation(event.name);
+        await this.gameRoomNameReservation.makeReservation({
+            gameRoomId: event.id,
+            gameRoomName: event.name,
+        });
     }
 }

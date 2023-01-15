@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GameRoomController } from './controllers';
-import { CreateGameHandler } from './commands';
+import { CreateGameHandler, JoinGameHandler } from './commands';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
     EventStore,
@@ -13,7 +13,7 @@ import { ReserveGameRoomNameOnGameCreatedEventHandler } from './events-handler';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
-const CommandHandlers = [CreateGameHandler];
+const CommandHandlers = [CreateGameHandler, JoinGameHandler];
 const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
 
 @Module({
@@ -26,7 +26,8 @@ const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
             useFactory: async (configService: ConfigService) => ({
                 secret: configService.getOrThrow<string>('JWT_SECRET'),
                 signOptions: {
-                    expiresIn: configService.getOrThrow<string>('JWT_EXPIRES_IN'),
+                    expiresIn:
+                        configService.getOrThrow<string>('JWT_EXPIRES_IN'),
                 },
             }),
             inject: [ConfigService],

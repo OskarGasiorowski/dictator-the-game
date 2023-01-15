@@ -3,6 +3,7 @@ import { CreateGameRoomDto } from './create-game-room.dto';
 import { GameRoomCreatedEvent, PlayerJoinGameRoomEvent } from './events';
 import { randomUUID } from 'crypto';
 import { Aggregate } from '@secret-hitler-the-game/event-sourcing';
+import { BadRequestException, ConflictException } from '@nestjs/common';
 
 interface GameRoomData {
     name: string;
@@ -36,7 +37,20 @@ export class GameRoomAggregate extends Aggregate<
         this._id = event.id;
     }
 
-    playerJoin(playerName: string) {
+    playerJoin(playerName: string, password: string) {
+        const playerWithGivenNameAlreadyExists = this.data.players
+            .map((player) => player.name)
+            .includes(playerName);
+        if (playerWithGivenNameAlreadyExists) {
+            throw new ConflictException(
+                `Player with ${playerName} already joined game`,
+            );
+        }
+
+        if (this.data.password !== password) {
+            throw new BadRequestException('Wrong password.');
+        }
+
         const event: PlayerJoinGameRoomEvent = {
             eventName: 'PlayerJoinGameRoomEvent',
             id: randomUUID(),
