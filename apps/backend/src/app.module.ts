@@ -1,5 +1,4 @@
 import { Global, Module } from '@nestjs/common';
-import { AuthModule } from './auth';
 import { GameModule } from './game';
 import { GameRoomModule } from './game-room';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -15,7 +14,6 @@ import { CqrsModule, EventBus } from '@nestjs/cqrs';
             isGlobal: true,
         }),
         GameModule,
-        AuthModule,
         GameRoomModule,
         CqrsModule,
     ],

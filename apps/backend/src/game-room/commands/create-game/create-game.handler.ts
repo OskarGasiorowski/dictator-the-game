@@ -1,8 +1,7 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { CreateGameCommand } from './create-game.command';
-import { AuthService } from '../../../auth';
 import { GameRoomAggregate, GameRoomRepository } from '../../domain';
-import { GameRoomNameReservationService } from '../../services';
+import { AuthService, GameRoomNameReservationService } from '../../services';
 import { ConflictException } from '@nestjs/common';
 import { PublisherAggregateMerger } from '@secret-hitler-the-game/event-sourcing';
 
