@@ -1,9 +1,20 @@
+import { routes } from '#modules';
 import { createBrowserRouter } from 'react-router-dom';
-import { StartPage } from './start';
+import { IndexPage } from './IndexPage';
+import { JoinGamePage } from './JoinGamePage';
+import { CreateGamePage } from './CreateGamePage';
 
 export const router = createBrowserRouter([
     {
-        path: '/',
-        element: <StartPage />,
+        path: routes.index,
+        element: <IndexPage />,
+    },
+    {
+        path: routes.joinGame,
+        element: <JoinGamePage />,
+    },
+    {
+        path: routes.createGame,
+        element: <CreateGamePage />,
     },
 ]);
