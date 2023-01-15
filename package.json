@@ -17,6 +17,7 @@
         "ioredis": "^5.2.5",
         "react": "18.2.0",
         "react-dom": "18.2.0",
+        "react-hook-form": "^7.42.1",
         "react-router-dom": "^6.6.2",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.0.0",

@@ -7,6 +7,7 @@ import {
     textColor,
     transitionDuration,
     transitionsAndAnimations,
+    typography,
 } from 'tailwindcss-classnames';
 import { ReactNode } from 'react';
 
@@ -30,14 +31,15 @@ export function Button({ children, className, ...props }: Props) {
                 textColor('text-white'),
                 sizing('w-full'),
                 backgroundColor(
-                    'bg-teal-700',
-                    'hover:bg-teal-800',
-                    'active:bg-teal-700',
+                    'bg-emerald-400',
+                    'hover:bg-emerald-500',
+                    'active:bg-emerald-400',
                 ),
                 transitionDuration('duration-150'),
                 transitionsAndAnimations('transition', 'ease-in-out'),
                 padding('py-3'),
                 borderRadius('rounded-md'),
+                typography('text-gray-800'),
                 className,
             )}
         >
