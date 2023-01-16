@@ -5,7 +5,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import {
     EventStore,
     PublisherAggregateMerger,
-} from '@secret-hitler-the-game/event-sourcing';
+} from '@dictator-the-game/event-sourcing';
 import { GameRoomRepository } from './domain';
 import Redis from 'ioredis';
 import { AuthService, GameRoomNameReservationService } from './services';

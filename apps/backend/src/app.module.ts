@@ -3,7 +3,7 @@ import { GameModule } from './game';
 import { GameRoomModule } from './game-room';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import Redis from 'ioredis';
-import { PublisherAggregateMerger } from '@secret-hitler-the-game/event-sourcing';
+import { PublisherAggregateMerger } from '@dictator-the-game/event-sourcing';
 import { CqrsModule, EventBus } from '@nestjs/cqrs';
 
 @Global()

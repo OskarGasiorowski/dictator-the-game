@@ -1,6 +1,6 @@
 {
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "npmScope": "secret-hitler-the-game",
+    "npmScope": "dictator-the-game",
     "tasksRunnerOptions": {
         "default": {
             "runner": "nx/tasks-runners/default",

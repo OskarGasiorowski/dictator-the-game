@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
     EventStore,
     PublisherAggregateMerger,
-} from '@secret-hitler-the-game/event-sourcing';
+} from '@dictator-the-game/event-sourcing';
 import { GameRoomAggregate } from './game-room.aggregate';
 
 const STREAM_PREFIX = 'game-room';

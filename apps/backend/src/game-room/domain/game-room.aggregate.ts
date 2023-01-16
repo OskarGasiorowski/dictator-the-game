@@ -2,7 +2,7 @@
 import { CreateGameRoomDto } from './create-game-room.dto';
 import { GameRoomCreatedEvent, PlayerJoinGameRoomEvent } from './events';
 import { randomUUID } from 'crypto';
-import { Aggregate } from '@secret-hitler-the-game/event-sourcing';
+import { Aggregate } from '@dictator-the-game/event-sourcing';
 import { BadRequestException, ConflictException } from '@nestjs/common';
 
 interface GameRoomData {

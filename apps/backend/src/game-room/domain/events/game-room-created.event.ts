@@ -1,4 +1,4 @@
-import { IEvent } from '@secret-hitler-the-game/event-sourcing';
+import { IEvent } from '@dictator-the-game/event-sourcing';
 
 export class GameRoomCreatedEvent implements IEvent {
     constructor(

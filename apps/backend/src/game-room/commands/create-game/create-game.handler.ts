@@ -3,7 +3,7 @@ import { CreateGameCommand } from './create-game.command';
 import { GameRoomAggregate, GameRoomRepository } from '../../domain';
 import { AuthService, GameRoomNameReservationService } from '../../services';
 import { ConflictException } from '@nestjs/common';
-import { PublisherAggregateMerger } from '@secret-hitler-the-game/event-sourcing';
+import { PublisherAggregateMerger } from '@dictator-the-game/event-sourcing';
 
 @CommandHandler(CreateGameCommand)
 export class CreateGameHandler implements ICommandHandler<CreateGameCommand> {

@@ -15,7 +15,7 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@secret-hitler-the-game/event-sourcing": [
+            "@dictator-the-game/event-sourcing": [
                 "libs/event-sourcing/src/index.ts"
             ]
         }
