@@ -32,7 +32,7 @@ const schema: z.ZodType<Form> = z.object({
 });
 
 interface Props {
-    onSubmit: () => void;
+    onSubmit: (formData: Form) => void;
     submitText: string;
 }
 
@@ -44,8 +44,6 @@ export function GameRoomPlayerForm({ onSubmit, submitText }: Props) {
     } = useForm<Form>({
         resolver: zodResolver(schema),
     });
-
-    console.log(errors);
 
     return (
         <form
