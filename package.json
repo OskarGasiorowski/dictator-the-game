@@ -19,6 +19,7 @@
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
         "ioredis": "^5.2.5",
+        "ky": "^0.33.2",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-hook-form": "^7.42.1",
@@ -26,7 +27,6 @@
         "react-router-dom": "^6.6.2",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.0.0",
-        "superagent": "^8.0.6",
         "tailwindcss-classnames": "^3.0.7",
         "tslib": "^2.3.0",
         "zod": "^3.20.2"

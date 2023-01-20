@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { TokenContextProvider } from './hooks';
 
 const queryClient = new QueryClient();
 
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
+            <TokenContextProvider>
+                <RouterProvider router={router} />
+            </TokenContextProvider>
         </QueryClientProvider>
     </StrictMode>,
 );
