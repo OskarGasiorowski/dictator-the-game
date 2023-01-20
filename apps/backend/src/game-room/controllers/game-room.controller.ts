@@ -1,9 +1,18 @@
-import { Body, Controller, Patch, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Patch,
+    Post,
+    Request,
+    UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateGameRequest, JoinGameRequest } from './models';
-import { CreateGameCommand } from '../commands';
-import { ApiTags } from '@nestjs/swagger';
-import { JoinGameCommand } from '../commands/join-game/join-game.command';
+import { CreateGameCommand, JoinGameCommand } from '../commands';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../jwt.strategy';
 
 @ApiTags('Game room')
 @Controller('game-room')
@@ -30,5 +39,13 @@ export class GameRoomController {
                 body.gameRoomName,
             ),
         );
+    }
+
+    @ApiBearerAuth()
+    @Get('players')
+    @UseGuards(JwtAuthGuard)
+    players(@Request() req) {
+        console.log(req.user);
+        return req.user;
     }
 }

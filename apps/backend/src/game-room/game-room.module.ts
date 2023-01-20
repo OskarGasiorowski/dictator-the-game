@@ -12,6 +12,8 @@ import { AuthService, GameRoomNameReservationService } from './services';
 import { ReserveGameRoomNameOnGameCreatedEventHandler } from './events-handler';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './jwt.strategy';
 
 const CommandHandlers = [CreateGameHandler, JoinGameHandler];
 const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
@@ -22,6 +24,7 @@ const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
         CqrsModule,
         Redis,
         PublisherAggregateMerger,
+        PassportModule,
         JwtModule.registerAsync({
             useFactory: async (configService: ConfigService) => ({
                 secret: configService.getOrThrow<string>('JWT_SECRET'),
@@ -39,6 +42,7 @@ const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
         AuthService,
         GameRoomRepository,
         GameRoomNameReservationService,
+        JwtStrategy,
         {
             provide: EventStore,
             useFactory: (redis: Redis) => new EventStore(redis),

@@ -14,6 +14,7 @@ async function bootstrap() {
     );
 
     const config = new DocumentBuilder()
+        .addBearerAuth()
         .setTitle('Backend')
         .setVersion('0.1')
         .build();
