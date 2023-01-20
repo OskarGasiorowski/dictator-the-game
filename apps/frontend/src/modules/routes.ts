@@ -1,5 +1,6 @@
 export const routes = {
     index: '/',
-    createGame: 'create-game',
-    joinGame: 'join-game',
+    createGame: '/create-game',
+    joinGame: '/join-game',
+    gameRoom: '/game-room',
 };
