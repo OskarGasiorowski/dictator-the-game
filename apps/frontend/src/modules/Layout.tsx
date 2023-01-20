@@ -10,8 +10,9 @@ import {
     gap,
     justifyContent,
     alignItems,
-    verticalAlign,
+    position,
 } from 'tailwindcss-classnames';
+import { NotificationManager } from './notifications';
 
 interface Props {
     children: ReactNode;
@@ -36,9 +37,10 @@ export function Layout({ children }: Props) {
                     gap('gap-6'),
                     justifyContent('justify-center'),
                     alignItems('items-center'),
+                    position('relative'),
                 )}
             >
-                {children}
+                <NotificationManager>{children}</NotificationManager>
             </div>
         </div>
     );

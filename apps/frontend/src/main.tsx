@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { TokenContextProvider } from './hooks';
+import { Layout } from '#modules';
 
 const queryClient = new QueryClient();
 
@@ -14,7 +15,9 @@ root.render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
             <TokenContextProvider>
-                <RouterProvider router={router} />
+                <Layout>
+                    <RouterProvider router={router} />
+                </Layout>
             </TokenContextProvider>
         </QueryClientProvider>
     </StrictMode>,
