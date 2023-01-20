@@ -8,7 +8,7 @@ export function IndexPage() {
     return (
         <Layout>
             <Button onClick={() => navigate(routes.joinGame)}>Join game</Button>
-            <Button onClick={() => navigate(routes.createGame)}>
+            <Button onClick={() => navigate(routes.joinGame)}>
                 Create new game
             </Button>
         </Layout>

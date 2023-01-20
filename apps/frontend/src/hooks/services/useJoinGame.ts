@@ -8,14 +8,14 @@ interface Body {
     gameRoomPassword: string;
 }
 
-export function useCreateGame() {
+export function useJoinGame() {
     const client = useHttpClient();
     const { setToken } = useToken();
 
     const { mutateAsync } = useMutation(
-        'create-game',
+        'join-game',
         async (body: Body) =>
-            await client.post('game-room', { json: body }).text(),
+            await client.patch('game-room/join', { json: body }).text(),
         {
             onSuccess: (token) => setToken(token),
         },
