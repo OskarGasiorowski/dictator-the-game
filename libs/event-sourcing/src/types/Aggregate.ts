@@ -9,7 +9,7 @@ export abstract class Aggregate<TEvent extends IEvent> {
         return this._id;
     }
 
-    get uncommittedEvents(): TEvent[] {
+    public get uncommittedEvents(): TEvent[] {
         return this._uncommittedEvents;
     }
 

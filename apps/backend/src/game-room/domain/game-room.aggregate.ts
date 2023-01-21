@@ -15,7 +15,11 @@ interface GameRoomData {
 export class GameRoomAggregate extends Aggregate<
     GameRoomCreatedEvent | PlayerJoinGameRoomEvent
 > {
-    private data: GameRoomData;
+    private _data: GameRoomData;
+
+    get data() {
+        return this._data;
+    }
 
     static create(data: CreateGameRoomDto) {
         const createdEvent = new GameRoomCreatedEvent(
@@ -32,13 +36,16 @@ export class GameRoomAggregate extends Aggregate<
         return aggregate;
     }
 
-    private applyGameRoomCreatedEvent(event: GameRoomCreatedEvent): void {
-        this.data = { ...event, players: [] };
+    private applyGameRoomCreatedEvent({
+        eventName,
+        ...event
+    }: GameRoomCreatedEvent): void {
+        this._data = { ...event, players: [] };
         this._id = event.id;
     }
 
     playerJoin(playerName: string, password: string) {
-        const playerWithGivenNameAlreadyExists = this.data.players
+        const playerWithGivenNameAlreadyExists = this._data.players
             .map((player) => player.name)
             .includes(playerName);
         if (playerWithGivenNameAlreadyExists) {
@@ -47,7 +54,7 @@ export class GameRoomAggregate extends Aggregate<
             );
         }
 
-        if (this.data.password !== password) {
+        if (this._data.password !== password) {
             throw new BadRequestException('Wrong password.');
         }
 
@@ -61,10 +68,11 @@ export class GameRoomAggregate extends Aggregate<
         this.applyPlayerJoinGameRoomEvent(event);
     }
 
-    protected applyPlayerJoinGameRoomEvent(
-        playerJoinGameRoomEvent: PlayerJoinGameRoomEvent,
-    ): void {
-        this.data.players.push({ ...playerJoinGameRoomEvent });
+    protected applyPlayerJoinGameRoomEvent({
+        eventName,
+        ...payload
+    }: PlayerJoinGameRoomEvent): void {
+        this._data.players.push({ ...payload });
     }
 
     publishEvents(): void {

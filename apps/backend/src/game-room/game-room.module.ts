@@ -14,8 +14,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
+import { GameRoomPlayersHandler } from './queries';
 
 const CommandHandlers = [CreateGameHandler, JoinGameHandler];
+const QueryHandlers = [GameRoomPlayersHandler];
 const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
 
 @Module({
@@ -38,6 +40,7 @@ const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
     ],
     providers: [
         ...CommandHandlers,
+        ...QueryHandlers,
         ...EventHandlers,
         AuthService,
         GameRoomRepository,
