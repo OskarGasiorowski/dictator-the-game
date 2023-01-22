@@ -4,6 +4,7 @@ import { IndexPage } from './IndexPage';
 import { JoinGamePage } from './JoinGamePage';
 import { CreateGamePage } from './CreateGamePage';
 import { GameRoomPage } from './GameRoomPage';
+import { GamePage } from './GamePage';
 
 export const router = createBrowserRouter([
     {
@@ -21,5 +22,9 @@ export const router = createBrowserRouter([
     {
         path: routes.gameRoom,
         element: <GameRoomPage />,
+    },
+    {
+        path: routes.game,
+        element: <GamePage />
     },
 ]);

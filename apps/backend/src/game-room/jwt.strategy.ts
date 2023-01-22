@@ -1,8 +1,14 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import {
+    CanActivate,
+    ExecutionContext,
+    Injectable,
+    SetMetadata,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
+import { Reflector } from '@nestjs/core';
 
 export interface User {
     userId: string;
@@ -33,3 +39,19 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {}
+
+export const HasRoles = (role: 'player' | 'admin') => SetMetadata('role', role);
+
+@Injectable()
+export class RolesGuard implements CanActivate {
+    constructor(private reflector: Reflector) {}
+
+    canActivate(context: ExecutionContext): boolean {
+        const requiredRoles = this.reflector.getAllAndOverride<
+            'player' | 'admin'
+        >('role', [context.getHandler(), context.getClass()]);
+
+        const { user } = context.switchToHttp().getRequest();
+        return requiredRoles === user?.role;
+    }
+}

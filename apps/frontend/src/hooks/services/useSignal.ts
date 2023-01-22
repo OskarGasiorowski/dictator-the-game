@@ -5,21 +5,21 @@ import { useEffect, useState } from 'react';
 const socket = io('localhost:8000');
 
 export function useSignal<TData>(
-    room: string,
+    event: string,
     onReceived?: (data: TData) => void,
 ) {
     const [lastReceivedData, setLastReceivedData] = useState<TData>();
 
     useEffect(() => {
-        socket.on(room, (payload: TData) => {
+        socket.on(event, (payload: TData) => {
             setLastReceivedData(payload);
             onReceived?.(payload);
         });
 
         return () => {
-            socket.off(room);
+            socket.off(event);
         };
-    }, [room, onReceived]);
+    }, [event, onReceived]);
 
     return lastReceivedData;
 }

@@ -1,4 +1,4 @@
-import { useGameRoomPlayers } from '../hooks';
+import { useGameRoomPlayers, useIsAdmin, useStartGame } from '../hooks';
 import {
     backgroundColor,
     borderRadius,
@@ -12,6 +12,8 @@ import { Button } from '#ui';
 
 export function GameRoomPage() {
     const players = useGameRoomPlayers();
+    const { startGame } = useStartGame();
+    const isAdmin = useIsAdmin();
 
     return (
         <>
@@ -30,7 +32,7 @@ export function GameRoomPage() {
                     {name}
                 </div>
             ))}
-            <Button>Start game</Button>
+            {isAdmin && <Button onClick={() => startGame()}>Start game</Button>}
         </>
     );
 }

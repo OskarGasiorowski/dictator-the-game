@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { GameRoomController } from './controllers';
-import { CreateGameHandler, JoinGameHandler } from './commands';
+import {
+    CreateGameHandler,
+    JoinGameHandler,
+    StartGameHandler,
+} from './commands';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
     EventStore,
@@ -16,11 +20,11 @@ import {
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy, RolesGuard } from './jwt.strategy';
 import { GameRoomPlayersHandler } from './queries';
 import { GameRoomGateway } from './gateway';
 
-const CommandHandlers = [CreateGameHandler, JoinGameHandler];
+const CommandHandlers = [CreateGameHandler, JoinGameHandler, StartGameHandler];
 const QueryHandlers = [GameRoomPlayersHandler];
 const EventHandlers = [
     ReserveGameRoomNameOnGameCreatedEventHandler,
@@ -54,6 +58,7 @@ const EventHandlers = [
         GameRoomNameReservationService,
         JwtStrategy,
         GameRoomGateway,
+        RolesGuard,
         {
             provide: EventStore,
             useFactory: (redis: Redis) => new EventStore(redis),

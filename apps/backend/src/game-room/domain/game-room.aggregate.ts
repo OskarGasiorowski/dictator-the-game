@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 import { CreateGameRoomDto } from './create-game-room.dto';
-import { GameRoomCreatedEvent, PlayerJoinGameRoomEvent } from './events';
+import {
+    GameRoomCreatedEvent,
+    PlayerJoinGameRoomEvent,
+    StartGameEvent,
+} from './events';
 import { randomUUID } from 'crypto';
 import { Aggregate } from '@dictator-the-game/event-sourcing';
 import { BadRequestException, ConflictException } from '@nestjs/common';
@@ -9,16 +13,22 @@ interface GameRoomData {
     name: string;
     password: string;
 
+    gameStatus: 'lobby' | 'in-game';
+
     players: { id: string; name: string }[];
 }
 
 export class GameRoomAggregate extends Aggregate<
-    GameRoomCreatedEvent | PlayerJoinGameRoomEvent
+    GameRoomCreatedEvent | PlayerJoinGameRoomEvent | StartGameEvent
 > {
     private _data: GameRoomData;
 
     get data() {
         return this._data;
+    }
+
+    publishEvents(): void {
+        throw new Error('');
     }
 
     static create(data: CreateGameRoomDto) {
@@ -40,7 +50,7 @@ export class GameRoomAggregate extends Aggregate<
         eventName,
         ...event
     }: GameRoomCreatedEvent): void {
-        this._data = { ...event, players: [] };
+        this._data = { ...event, players: [], gameStatus: 'lobby' };
         this._id = event.id;
     }
 
@@ -80,7 +90,22 @@ export class GameRoomAggregate extends Aggregate<
         this._data.players.push({ ...payload });
     }
 
-    publishEvents(): void {
-        throw new Error('');
+    startGame() {
+        if (this._data.gameStatus !== 'lobby') {
+            throw new BadRequestException('Game is already started');
+        }
+
+        const event = new StartGameEvent(
+            'StartGameEvent',
+            this.id,
+            this._data.players,
+        );
+
+        this.enqueueEvent(event);
+        this.applyStartGameEvent(event);
+    }
+
+    protected applyStartGameEvent(event: StartGameEvent) {
+        this._data.gameStatus = 'in-game';
     }
 }

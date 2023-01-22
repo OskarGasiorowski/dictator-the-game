@@ -1,0 +1,1 @@
+export { StartGameEventEventHandler } from './start-game.event-handler';

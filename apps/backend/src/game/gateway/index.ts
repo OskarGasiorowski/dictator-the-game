@@ -1,0 +1,1 @@
+export { GameGateway } from './game.gateway';

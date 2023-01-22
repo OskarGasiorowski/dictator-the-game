@@ -7,12 +7,15 @@ import {
     Request,
     UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateGameRequest, JoinGameRequest } from './models';
-import { CreateGameCommand, JoinGameCommand } from '../commands';
+import {
+    CreateGameCommand,
+    JoinGameCommand,
+    StartGameCommand,
+} from '../commands';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard, User } from '../jwt.strategy';
+import { HasRoles, JwtAuthGuard, RolesGuard, User } from '../jwt.strategy';
 import { GameRoomPlayersQuery } from '../queries';
 
 @ApiTags('Game room')
@@ -47,5 +50,13 @@ export class GameRoomController {
     @UseGuards(JwtAuthGuard)
     players(@Request() { user }: { user: User }) {
         return this.queryBus.execute(new GameRoomPlayersQuery(user.gameId));
+    }
+
+    @ApiBearerAuth()
+    @Patch('start')
+    @HasRoles('admin')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    async start(@Request() { user }: { user: User }) {
+        await this.commandBus.execute(new StartGameCommand(user.gameId));
     }
 }

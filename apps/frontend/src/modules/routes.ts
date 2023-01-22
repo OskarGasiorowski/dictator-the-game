@@ -3,4 +3,5 @@ export const routes = {
     createGame: '/create-game',
     joinGame: '/join-game',
     gameRoom: '/game-room',
+    game: '/game',
 };

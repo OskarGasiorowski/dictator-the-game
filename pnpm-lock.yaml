@@ -55,6 +55,7 @@ specifiers:
   jest: 28.1.1
   jest-environment-jsdom: 28.1.1
   jsdom: ~20.0.3
+  jwt-decode: ^3.1.2
   ky: ^0.33.2
   nx: 15.5.1
   passport-jwt: ^4.0.1
@@ -104,6 +105,7 @@ dependencies:
   class-transformer: 0.5.1
   class-validator: 0.14.0
   ioredis: 5.2.5
+  jwt-decode: 3.1.2
   ky: 0.33.2
   passport-jwt: 4.0.1
   react: 18.2.0
@@ -7270,6 +7272,10 @@ packages:
     dependencies:
       jwa: 1.4.1
       safe-buffer: 5.2.1
+    dev: false
+
+  /jwt-decode/3.1.2:
+    resolution: {integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==}
     dev: false
 
   /kind-of/6.0.3:
