@@ -45,6 +45,11 @@ export class GameRoomAggregate extends Aggregate<
     }
 
     playerJoin(playerName: string, password: string) {
+        // TODO this check should comes from strategy pattern or something
+        if (this._data.players.length > 10) {
+            throw new BadRequestException(`Game room is full.`);
+        }
+
         const playerWithGivenNameAlreadyExists = this._data.players
             .map((player) => player.name)
             .includes(playerName);
