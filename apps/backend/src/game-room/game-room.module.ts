@@ -9,16 +9,23 @@ import {
 import { GameRoomRepository } from './domain';
 import Redis from 'ioredis';
 import { AuthService, GameRoomNameReservationService } from './services';
-import { ReserveGameRoomNameOnGameCreatedEventHandler } from './events-handler';
+import {
+    ReserveGameRoomNameOnGameCreatedEventHandler,
+    NotifyPlayerJoinedEventHandler,
+} from './events-handler';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { GameRoomPlayersHandler } from './queries';
+import { GameRoomGateway } from './gateway';
 
 const CommandHandlers = [CreateGameHandler, JoinGameHandler];
 const QueryHandlers = [GameRoomPlayersHandler];
-const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
+const EventHandlers = [
+    ReserveGameRoomNameOnGameCreatedEventHandler,
+    NotifyPlayerJoinedEventHandler,
+];
 
 @Module({
     controllers: [GameRoomController],
@@ -46,6 +53,7 @@ const EventHandlers = [ReserveGameRoomNameOnGameCreatedEventHandler];
         GameRoomRepository,
         GameRoomNameReservationService,
         JwtStrategy,
+        GameRoomGateway,
         {
             provide: EventStore,
             useFactory: (redis: Redis) => new EventStore(redis),

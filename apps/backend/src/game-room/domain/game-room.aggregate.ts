@@ -58,11 +58,11 @@ export class GameRoomAggregate extends Aggregate<
             throw new BadRequestException('Wrong password.');
         }
 
-        const event: PlayerJoinGameRoomEvent = {
-            eventName: 'PlayerJoinGameRoomEvent',
-            id: randomUUID(),
-            name: playerName,
-        };
+        const event = new PlayerJoinGameRoomEvent(
+            'PlayerJoinGameRoomEvent',
+            playerName,
+            randomUUID(),
+        );
 
         this.enqueueEvent(event);
         this.applyPlayerJoinGameRoomEvent(event);

@@ -1,7 +1,9 @@
 import { IEvent } from '@dictator-the-game/event-sourcing';
 
-export interface PlayerJoinGameRoomEvent extends IEvent {
-    eventName: 'PlayerJoinGameRoomEvent';
-    name: string;
-    id: string;
+export class PlayerJoinGameRoomEvent implements IEvent {
+    constructor(
+        public readonly eventName: 'PlayerJoinGameRoomEvent',
+        public readonly name: string,
+        public readonly id: string,
+    ) {}
 }
