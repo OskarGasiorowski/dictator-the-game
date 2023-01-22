@@ -2,6 +2,7 @@ import {
     backgroundColor,
     borderRadius,
     classnames,
+    interactivity,
     padding,
     sizing,
     textColor,
@@ -10,6 +11,8 @@ import {
     typography,
 } from 'tailwindcss-classnames';
 import { ReactNode } from 'react';
+import { doc } from 'prettier';
+import cursor = doc.builders.cursor;
 
 interface Props
     extends Omit<
@@ -24,6 +27,11 @@ interface Props
 }
 
 export function Button({ children, className, ...props }: Props) {
+    const disabled = classnames(
+        backgroundColor('disabled:bg-gray-500'),
+        interactivity('disabled:cursor-not-allowed'),
+    );
+
     return (
         <button
             {...props}
@@ -40,6 +48,8 @@ export function Button({ children, className, ...props }: Props) {
                 padding('py-4'),
                 borderRadius('rounded-md'),
                 typography('text-gray-800'),
+                interactivity('cursor-pointer'),
+                disabled,
                 className,
             )}
         >

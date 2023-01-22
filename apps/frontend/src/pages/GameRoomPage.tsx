@@ -32,7 +32,14 @@ export function GameRoomPage() {
                     {name}
                 </div>
             ))}
-            {isAdmin && <Button onClick={() => startGame()}>Start game</Button>}
+            {isAdmin && (
+                <Button
+                    disabled={players.length < 5}
+                    onClick={() => startGame()}
+                >
+                    Start game
+                </Button>
+            )}
         </>
     );
 }

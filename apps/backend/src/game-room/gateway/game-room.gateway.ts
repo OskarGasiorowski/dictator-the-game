@@ -23,7 +23,6 @@ export class GameRoomGateway
     }
 
     playerJoined(player: { name: string; id: string }) {
-        console.log('here');
         this.server.to('test-room').emit('playerJoined', player);
     }
 }

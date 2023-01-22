@@ -60,6 +60,10 @@ export class GameRoomAggregate extends Aggregate<
             throw new BadRequestException(`Game room is full.`);
         }
 
+        if (this._data.gameStatus !== 'lobby') {
+            throw new BadRequestException('Game is already started');
+        }
+
         const playerWithGivenNameAlreadyExists = this._data.players
             .map((player) => player.name)
             .includes(playerName);
@@ -92,7 +96,14 @@ export class GameRoomAggregate extends Aggregate<
 
     startGame() {
         if (this._data.gameStatus !== 'lobby') {
-            throw new BadRequestException('Game is already started');
+            throw new ConflictException('Game is already started');
+        }
+
+        // TODO this check should comes from strategy pattern or something
+        if (this._data.players.length < 5) {
+            throw new BadRequestException(
+                `To start game you need at least 5 players.`,
+            );
         }
 
         const event = new StartGameEvent(
