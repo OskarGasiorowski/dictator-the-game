@@ -1,9 +1,11 @@
 import { Button } from '#ui';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '#modules';
+import { useShouldBeInGameRoom } from '../hooks';
 
 export function IndexPage() {
     const navigate = useNavigate();
+    useShouldBeInGameRoom();
 
     return (
         <>

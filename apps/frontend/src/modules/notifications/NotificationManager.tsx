@@ -38,7 +38,7 @@ export function NotificationManager({ children }: Props) {
         setNotifications((prevState) => [...prevState, notification]);
         const timeout = setTimeout(
             () => removeNotification(notification.id),
-            105000,
+            5000,
         );
 
         setTimeOuts((prevState) => [...prevState, timeout]);
